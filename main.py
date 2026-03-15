@@ -50,3 +50,19 @@ if Analyze_button and Uploaded_file:
 
         Please provide your analysis in a clear, structured format with specific recommendations.
         """
+
+
+        client=OpenAI(api_key=OpenAI.api_key)
+        respone=client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role":"system","content":"You are an expert resume reviewer with years of experience in HR and recruitment."},
+                {"role":"user","content":prompt}
+            ],
+            temperature=0.7,
+            max_tokens=1000
+        )
+        st.subheader("Resume Analysis")
+        st.markdown(respone.choices[0].message.content)
+    except Exception as e:
+        st.error(f"An error occurred while processing the file: {e}")    
